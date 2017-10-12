@@ -85,10 +85,10 @@ class Melon(object):
 
     # Fill in the rest
     # Needs __init__ and is_sellable methods
-    def __init__(self, code, shape, color, field_num, harvester):
+    def __init__(self, mtype, shape, color, field_num, harvester):
         """Initialize a melon."""
 
-        self.code = code
+        self.mtype = mtype
         self.shape = shape
         self.color = color
         self.field_num = field_num
@@ -103,13 +103,41 @@ class Melon(object):
 def make_melons(melon_types):
     """Returns a list of Melon objects."""
 
-    # Fill in the rest
+    all_melons = []
+
+    melon_1 = Melon(melon_types['yw'], 8, 7, 2, "Sheila")
+    melon_2 = Melon(melon_types['yw'], 3, 4, 2, "Sheila")
+    melon_3 = Melon(melon_types['yw'], 9, 8, 3, "Sheila")
+    melon_4 = Melon(melon_types['cas'], 10, 6, 35, "Sheila")
+    melon_5 = Melon(melon_types['cren'], 8, 9, 35, "Michael")
+    melon_6 = Melon(melon_types['cren'], 8, 2, 35, "Michael")
+    melon_7 = Melon(melon_types['cren'], 2, 3, 4, "Michael")
+    melon_8 = Melon(melon_types['musk'], 6, 7, 4, "Michael")
+    melon_9 = Melon(melon_types['yw'], 7, 10, 3, "Sheila")
+
+    all_melons.append(melon_1)
+    all_melons.append(melon_2)
+    all_melons.append(melon_3)
+    all_melons.append(melon_4)
+    all_melons.append(melon_5)
+    all_melons.append(melon_6)
+    all_melons.append(melon_7)
+    all_melons.append(melon_8)
+    all_melons.append(melon_9)
+
+    return all_melons
+
 
 def get_sellability_report(melons):
     """Given a list of melon object, prints whether each one is sellable."""
 
-    # Fill in the rest 
-
+    for melon in melons:
+        if melon.is_sellable() is True:
+            print "Harvested by {harvester} from field # {field_num} CAN BE SOLD".format(
+                harvester=melon.harvester, field_num=melon.field_num)
+        else:
+            print "Harvested by {harvester} from field # {field_num} NOT SELLABLE".format(
+                harvester=melon.harvester, field_num=melon.field_num)
 
 
 if __name__ == "__main__":
@@ -118,7 +146,8 @@ if __name__ == "__main__":
     d = make_melon_type_lookup(c)
     #print d
     #print d['musk'].is_bestseller
-
-    m = Melon("yw", 7, 10, 3, "Sheila")
-
-    print m.is_sellable()
+    melon_types = make_melon_types()
+    melons_by_id = make_melon_type_lookup(melon_types)
+    melons = make_melons(melons_by_id)
+    get_sellability_report(melons)
+    print melons[0].mtype.first_harvest  # how to get attributes of the other class
